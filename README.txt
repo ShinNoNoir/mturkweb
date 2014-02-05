@@ -21,8 +21,8 @@ Example usage:
     
     session = mturkweb.login('user@email.example', 'password')
     batches = session.get_batches()
-	
-	for status in batches:
+    
+    for status in batches:
         print status
         print '-' * 76
         
