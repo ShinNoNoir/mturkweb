@@ -12,7 +12,7 @@ batches_reviewed
 '''.split()
 
 LOGIN_URL = 'https://requester.mturk.com/begin_signin'
-LOGIN_SUCCESS_URL = 'https://requester.mturk.com/'
+LOGIN_SUCCESS_URL = 'https://requester.mturk.com'
 LOGIN_NOT_A_REQUESTER_URL_PREFIX = 'https://requester.mturk.com/mturk/register'
 COOKIE_DOMAIN = 'requester.mturk.com'
 MANAGE_URL = 'https://requester.mturk.com/manage'
@@ -22,6 +22,7 @@ MANAGE_PARAMS = {
     'page': None,
     'status': None
 }
+UA_STRING = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 
 def login(email, password):
     """Login to Mechanical Turk with an Amazon account.
@@ -39,6 +40,7 @@ def login(email, password):
     """
     br = mechanize.Browser()
     cj = mechanize.CookieJar()
+    br.addheaders = [('User-agent', UA_STRING)]
     br.set_cookiejar(cj)
     br.set_handle_robots(False)
     br.open(LOGIN_URL)
@@ -55,7 +57,10 @@ def login(email, password):
     elif response_url.startswith(LOGIN_NOT_A_REQUESTER_URL_PREFIX):
         raise ValueError('Not an MTurk Requester account')
     else:
-        raise ValueError('Wrong email/password')
+        msg = 'Wrong email/password'
+        if DEBUG:
+            msg += ': ' + response_url
+        raise ValueError(msg)
 
 
 def cookiejar_has_requester_state(cookiejar):
