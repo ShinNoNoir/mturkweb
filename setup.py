@@ -14,7 +14,7 @@ about batches that were created in the AMT web interface.'''.strip()
 
 setup(
     name = 'mturkweb',
-    version='0.1.1',
+    version='0.1.2',
     author = 'Raynor Vliegendhart',
     author_email = 'ShinNoNoir@gmail.com',
     url = 'https://github.com/ShinNoNoir/mturkweb',

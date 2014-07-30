@@ -50,7 +50,7 @@ def login(email, password):
     response = br.submit()
     
     response_url = response.geturl()
-    if response_url == LOGIN_SUCCESS_URL:
+    if response_url.rstrip('/') == LOGIN_SUCCESS_URL:
         assert cookiejar_has_requester_state(cj), \
             'A successful login should set requester_state cookie'
         return MTurkWebSession(br, cj)
