@@ -22,6 +22,16 @@ MANAGE_PARAMS = {
     'page': None,
     'status': None
 }
+TRANSACTION_URL = 'https://requester.mturk.com/mturk/transactionhistory'
+TRANSACTION_PARAMS = {'fromMonth': 1,
+                      'fromDay': 1,
+                      'fromYear': None,
+                      'toMonth': 1,
+                      'toDay': 1,
+                      'toYear': None,
+                      'transactionDownload.x': 1,
+                      'transactionDownload.y': 1,
+                      'sortType': 'DATE_DESCENDING'}
 UA_STRING = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 
 def login(email, password):
@@ -152,6 +162,29 @@ class MTurkWebSession:
                 all_batches.extend(batches)
         
         return res
+    
+    def get_transaction_history_csv(self, year):
+        """
+        Retrieves the transaction history for a specific year.
+        
+        Args:
+            year: The year for which to get the transaction history.
+            
+        Returns:
+            A string containing the transaction history in CSV format
+        """
+        
+        br = self.browser
+        params = dict(TRANSACTION_PARAMS, fromYear=year, toYear=year+1)
+        url = '%s?%s' % (TRANSACTION_URL, urlencode(params))
+        response = br.open(url).read()
+        
+        soup = BeautifulSoup(response)
+        error = soup.find(attrs={'class': 'message error'})
+        if error:
+            error_msgs = [msg for msg in error.find(id='alertboxMessage')]
+            raise ValueError(error_msgs[0].strip())
+        return response
 
 class Batch:
     """Represents a Mechanical Turk Batch.
