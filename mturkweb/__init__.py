@@ -115,7 +115,9 @@ class MTurkWebSession:
         response = br.open(url)
         soup = BeautifulSoup(response.read())
         pagination = soup.find(attrs={'class': 'pagination'})
-        page_links = set( int(a.string) for a in pagination.find_all('a') if a.string.isdigit() )
+        page_links = set( int(a.string) for a in pagination.find_all('a') if a.string.isdigit() ) \
+                     if pagination is not None else set()
+        
         next_page = page+1 if (page+1) in page_links else None
         
         DIV_ID_PREFIX = 'batch_capsule_'
