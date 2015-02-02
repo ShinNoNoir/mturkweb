@@ -15,7 +15,7 @@ LOGIN_URL = 'https://requester.mturk.com/begin_signin'
 LOGIN_SUCCESS_URL = 'https://requester.mturk.com'
 LOGIN_NOT_A_REQUESTER_URL_PREFIX = 'https://requester.mturk.com/mturk/register'
 COOKIE_DOMAIN = 'requester.mturk.com'
-MANAGE_URL = 'https://requester.mturk.com/manage'
+MANAGE_URL = 'https://requester.mturk.com/batches.js'
 MANAGE_PARAMS = {
     'direction': 'DESC',
     'order': 'Creation Date',
