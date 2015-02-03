@@ -4,6 +4,7 @@ import csv
 import getpass
 import StringIO
 import argparse
+import mturkweb
 
 from collections import defaultdict
 
@@ -11,10 +12,6 @@ from collections import defaultdict
 import ssl
 if hasattr(ssl, '_create_unverified_context'):
     ssl._create_default_https_context = ssl._create_unverified_context
-
-# TODO: fix this
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import mturkweb
 
 CONSIDER_PAYMENT_TYPES = ['AssignmentPayment', 'BonusPayment']
 
@@ -43,13 +40,16 @@ def parse_csv(csv_string):
 
 def main(argv):
     parser = argparse.ArgumentParser(description='Download the transaction history from mturk')
+
+    parser.add_argument('year', help='The year you want the transaction history for')
+    parser.add_argument('--amount', help='Only print payments above this threshold (in $, default: 10)', default=10)
     
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(2)
+            
     try:
-        parser.add_argument('year', help='The year you want the transaction history for')
-        parser.add_argument('--amount', help='Only print payments above this threshold (default: 10)', default=10)
-        
         args = parser.parse_args(sys.argv[1:])
-        
     except argparse.ArgumentError:
         parser.print_help()
         sys.exit(2)
@@ -63,7 +63,7 @@ def main(argv):
         sys.exit(1) 
 
     sorted_results = parse_csv(transactions)
-    amount_threshold = args.amount * -1
+    amount_threshold = float(args.amount) * -1
     print '\n%-20s%10s%10s\n' % ('Worker', 'Amount', '#HITS')
     for worker, amount, times in sorted_results:
         if amount < amount_threshold:
