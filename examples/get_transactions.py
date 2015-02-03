@@ -7,6 +7,11 @@ import argparse
 
 from collections import defaultdict
 
+# Fix for CERTIFICATE_VERIFY_FAILED error in python 2.7.9 (see https://bugs.python.org/issue22417)
+import ssl
+if hasattr(ssl, '_create_unverified_context'):
+    ssl._create_default_https_context = ssl._create_unverified_context
+
 # TODO: fix this
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import mturkweb
