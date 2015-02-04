@@ -10,11 +10,11 @@ from setuptools import setup
 
 long_description = '''
 A simple Amazon Mechanical Turk (AMT) library for retrieving information 
-about batches that were created in the AMT web interface.'''.strip()
+that is only available through the AMT web interface such as HIT batches.'''.strip()
 
 setup(
     name = 'mturkweb',
-    version='0.1.2',
+    version='0.1.3',
     author = 'Raynor Vliegendhart',
     author_email = 'ShinNoNoir@gmail.com',
     url = 'https://github.com/ShinNoNoir/mturkweb',
@@ -29,7 +29,8 @@ setup(
     
     install_requires = [
         'mechanize==0.2.5',
-        'beautifulsoup4==4.3.2'
+        'beautifulsoup4==4.3.2',
+        'argparse' # Required for Python 2.6
     ],
 )
 

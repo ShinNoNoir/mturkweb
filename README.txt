@@ -2,7 +2,11 @@ Readme
 ==============================================================================
 
 The mturkweb package is a simple Amazon Mechanical Turk (AMT) library for 
-retrieving information about batches that were created in the AMT web interface.
+retrieving information information that is only available through the AMT 
+web interface:
+
+   * HIT batches
+   * Monetary transactions 
 
 
 Usage
