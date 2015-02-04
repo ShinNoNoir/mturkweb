@@ -23,10 +23,10 @@ MANAGE_PARAMS = {
     'status': None
 }
 TRANSACTION_URL = 'https://requester.mturk.com/mturk/transactionhistory'
-TRANSACTION_PARAMS = {'fromMonth': 1,
+TRANSACTION_PARAMS = {'fromMonth': 0,
                       'fromDay': 1,
                       'fromYear': None,
-                      'toMonth': 1,
+                      'toMonth': 0,
                       'toDay': 1,
                       'toYear': None,
                       'transactionDownload.x': 1,
